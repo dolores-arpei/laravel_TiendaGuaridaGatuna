@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ContactController;
+
 
 // Welcome page
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome'); // Cuando entras a la home (/), se ejecuta el método index() del WelcomeController.
@@ -30,7 +32,5 @@ Route::post('/cart', [CartController::class, 'store'])->name('cart.store'); // a
 Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update'); // actualizar cantidad de un item del carrito (simulado)
 
 // Página de contacto
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
