@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.public')
 @section('title', ($onlyOnSale ?? false) ? 'Productos en Oferta - Guarida Gatuna' : 'Todos los Productos - Guarida Gatuna')
 
 @push('styles')

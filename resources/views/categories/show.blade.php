@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.public')
 @section('title', $category->name . ' - Mi Tienda')
 
 @section('content')

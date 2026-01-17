@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.public')
 @section('title', 'Contacto - Guarida Gatuna')
 
 @section('content')

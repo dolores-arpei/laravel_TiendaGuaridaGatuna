@@ -1,36 +1,81 @@
 <?php
 
-use Illuminate\Support\Facades\Route; // Route es la clase que te permite escribir Route::get(...)
-
-// Los ...Controller son los controladores donde está la lógica (cargar mocks, filtrar productos, etc.)
-use App\Http\Controllers\WelcomeController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\WishlistController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
-// Welcome page
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome'); // Cuando entras a la home (/), se ejecuta el método index() del WelcomeController.
+// ===========================================
+// RUTAS PÚBLICAS (Sin autenticación requerida)
+// ===========================================
 
-// 
+// Welcome page - shows home page with featured content
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+
+// Contact page
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// Rutas de categorías (solo lectura)
+Route::resource('categories', CategoryController::class)->only(['index', 'show']);
+
+// Rutas de productos (solo lectura)
 Route::get('/products-on-sale', [ProductController::class, 'onSale'])->name('products.on-sale');
+Route::resource('products', ProductController::class)->only(['index', 'show']);
 
-Route::resource('products', ProductController::class);
+// Rutas de ofertas (solo lectura)
+Route::resource('offers', OfferController::class)->only(['index', 'show']);
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+// Rutas del carrito de compras (completas)
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');       // <-- NUEVA
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');  // <-- NUEVA
+Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');  // <-- NUEVA
 
-// OfferController
-Route::get('/offers', [OfferController::class, 'index'])->name('offers.index'); // lista ofertas.
-Route::get('/offers/{offer}', [OfferController::class, 'show'])->name('offers.show'); // 
 
-// Carrito
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index'); // ver el carrito (mostrar la vista)
-Route::post('/cart', [CartController::class, 'store'])->name('cart.store'); // añadir un producto (simulado)
-Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update'); // actualizar cantidad de un item del carrito (simulado)
+// ===========================================
+// RUTAS DE USUARIO AUTENTICADO (Breeze)
+// ===========================================
 
-// Página de contacto
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::middleware('auth')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
+    // Perfil de usuario
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+// ===========================================
+// RUTAS DE ADMINISTRACIÓN (Protegidas + Logging)
+// ===========================================
+
+Route::middleware(['auth', 'log.activity'])->prefix('admin')->name('admin.')->group(function () {
+    // Rutas de gestión de productos
+    Route::get('/products', [ProductController::class, 'adminIndex'])->name('products.index');
+    Route::resource('products', ProductController::class)->except(['index', 'show']);
+    
+    // Rutas para la lista de deseos (Wishlist)
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+});
+
+// Las rutas de autenticación (login, register, etc.) se incluyen desde aquí
+require __DIR__.'/auth.php';

@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.public')
 @section('title', 'Guarida Gatuna - Tienda para gatos')
 
 @push('styles')
