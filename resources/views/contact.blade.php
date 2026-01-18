@@ -8,21 +8,62 @@
                 <h1 class="text-3xl font-bold text-gray-900 mb-4">Contacta con Guarida Gatuna</h1>
                 <p class="text-gray-600">Estamos aquí para ayudarte. Envíanos un mensaje.</p>
             </div>
+
+
             
-            <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col items-center justify-center">
-                <svg class="w-20 h-20 text-primary-600 mb-4 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48">
-                    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="4" fill="#e0e7ff"/>
-                    <path d="M16 32l8-8 8 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <path d="M24 16v8" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </svg>
 
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">¡En Construcción!</h2>
-                <p class="text-gray-500 mb-4">Estamos trabajando para traerte esta funcionalidad muy pronto.</p>
 
-                <a href="{{ route('welcome') }}"
-                   class="inline-block mt-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition">
-                    Volver al inicio
-                </a>
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <form action="{{ route('contact.send') }}" method="POST">
+                    @csrf
+                    
+                    <div class="mb-6">
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nombre Completo</label>
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" 
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" 
+                               placeholder="Tu nombre" required>
+                        @error('name')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" 
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" 
+                               placeholder="nombre@empresa.com" required>
+                        @error('email')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="subject" class="block mb-2 text-sm font-medium text-gray-900">Asunto</label>
+                        <input type="text" id="subject" name="subject" value="{{ old('subject') }}" 
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" 
+                               placeholder="¿En qué podemos ayudarte?" required>
+                        @error('subject')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+
+
+                    <div class="mb-6">
+                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Mensaje</label>
+                        <textarea id="message" name="message" rows="4" 
+                                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500" 
+                                  placeholder="Escribe tu mensaje aquí..." required>{{ old('message') }}</textarea>
+                        @error('message')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit" 
+                            class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center transition-colors duration-200">
+                        Enviar Mensaje
+                    </button>
+                </form>
             </div>
         </div>
     </div>

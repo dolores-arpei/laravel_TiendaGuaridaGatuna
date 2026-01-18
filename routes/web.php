@@ -23,9 +23,8 @@ use App\Http\Controllers\WishlistController;
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // Contact page
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
 
 // Rutas de categorías (solo lectura)
 Route::resource('categories', CategoryController::class)->only(['index', 'show']);

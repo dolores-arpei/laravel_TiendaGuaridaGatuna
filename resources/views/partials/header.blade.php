@@ -5,7 +5,7 @@
             <!-- Logo -->
             <div class="flex items-center space-x-4">
             <a href="{{ route('welcome') }}" class="text-2xl font-bold text-primary-600">
-                    🛍️ Mi Tienda
+                    😺 Guarida Gatuna
                 </a>
             </div>
             
@@ -23,6 +23,14 @@
                     🛒 Carrito ( {{ $totalQuantity }} )
             </a>
             </div>
+        
+            {{-- <!-- CAMBIO: botón luna -->
+                <button id="darkModeToggle"
+                        class="text-gray-700 hover:text-primary-600 transition p-2 rounded-full">
+                    🌙
+                </button> --}}
+            
         </div>
+        
     </div>
 </header>
