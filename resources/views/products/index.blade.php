@@ -15,7 +15,7 @@
     <div class="container mx-auto px-6 py-8">
 
         @if(($onlyOnSale ?? false) === true)
-            <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg shadow p-6 mb-6">
+            <div class="bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg shadow p-6 mb-6">
                 <h1 class="text-3xl font-bold">🏷️ ¡Productos en Oferta!</h1>
             </div>
 

@@ -62,19 +62,23 @@ Route::middleware('auth')->group(function () {
 
 
 // ===========================================
-// RUTAS DE ADMINISTRACIÓN (Protegidas + Logging)
+// RUTAS DE ADMINISTRACIÓN (Protegidas + Logging + Gate)
 // ===========================================
 
-Route::middleware(['auth', 'log.activity'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'log.activity', 'can:manage-products'])->prefix('admin')->name('admin.')->group(function () {
     // Rutas de gestión de productos
     Route::get('/products', [ProductController::class, 'adminIndex'])->name('products.index');
     Route::resource('products', ProductController::class)->except(['index', 'show']);
-    
-    // Rutas para la lista de deseos (Wishlist)
+});
+
+// ===========================================
+// RUTAS DE LISTA DE DESEOS (Autenticadas)
+// ===========================================
+Route::middleware(['auth'])->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 });
 
 // Las rutas de autenticación (login, register, etc.) se incluyen desde aquí
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

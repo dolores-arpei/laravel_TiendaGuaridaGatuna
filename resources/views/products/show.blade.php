@@ -3,15 +3,12 @@
 @section('content')
     <div class="container mx-auto px-6 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
+
             <!-- Imagen del Producto -->
             <div class="bg-white rounded-lg shadow-lg p-6">
                 @if(!empty($product->image))
-                    <img
-                        src="{{ asset('storage/' . $product->image) }}"
-                        alt="{{ $product->name }}"
-                        class="w-full h-96 object-cover rounded-lg"
-                    >
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                        class="w-full h-96 object-cover rounded-lg">
                 @else
                     <div class="h-96 bg-gray-200 flex items-center justify-center rounded-lg">
                         <span class="text-8xl">📦</span>
@@ -31,15 +28,15 @@
                             <span class="text-2xl text-gray-400 line-through">
                                 €{{ number_format($product->price, 2) }}
                             </span>
-                            <span class="text-4xl font-bold text-orange-600">
+                            <span class="text-4xl font-bold text-secondary-600">
                                 €{{ number_format($product->final_price, 2) }}
                             </span>
                         </div>
-                        <p class="text-sm text-orange-600 mt-2">
+                        <p class="text-sm text-secondary-600 mt-2">
                             ¡Ahorra €{{ number_format($product->price - $product->final_price, 2) }}!
                         </p>
                     @else
-                        <span class="text-4xl font-bold text-primary-600">
+                        <span class="text-4xl font-bold text-gray-900">
                             €{{ number_format($product->price, 2) }}
                         </span>
                     @endif
@@ -50,7 +47,7 @@
                     <div class="mb-6">
                         <span class="text-sm text-gray-500">Categoría:</span>
                         <a href="{{ route('categories.show', $product->category->id) }}"
-                           class="ml-2 bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm hover:bg-primary-200 transition">
+                            class="ml-2 bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm hover:bg-primary-200 transition">
                             {{ $product->category->name }}
                         </a>
                     </div>
@@ -61,7 +58,7 @@
                     <div class="mb-6">
                         <span class="text-sm text-gray-500">Oferta activa:</span>
                         <div class="mt-2">
-                            <span class="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">
+                            <span class="inline-block bg-secondary-100 text-secondary-800 text-sm px-3 py-1 rounded-full">
                                 🏷️ {{ $product->offer->name }} (-{{ $product->offer->discount_percentage }}%)
                             </span>
                         </div>
@@ -70,23 +67,23 @@
 
                 <!-- Botones de Acción -->
                 <div class="flex flex-col sm:flex-row gap-3">
-                    
+
                     {{-- ✅ Añadir al carrito (POST) --}}
                     <form action="{{ route('cart.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <button type="submit"
-                                class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition w-full sm:w-auto">
+                            class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition w-full sm:w-auto">
                             🛒 Añadir al Carrito
                         </button>
                     </form>
 
                     {{-- ✅ Wishlist (solo autenticados) --}}
                     @auth
-                        <form action="{{ route('admin.wishlist.store', $product->id) }}" method="POST">
+                        <form action="{{ route('wishlist.store', $product->id) }}" method="POST">
                             @csrf
                             <button type="submit"
-                                    class="border-2 border-red-500 text-red-500 px-6 py-3 rounded-lg hover:bg-red-500 hover:text-white transition w-full sm:w-auto">
+                                class="border-2 border-red-500 text-red-500 px-6 py-3 rounded-lg hover:bg-red-500 hover:text-white transition w-full sm:w-auto">
                                 ❤️ Guardar en Favoritos
                             </button>
                         </form>
@@ -94,13 +91,13 @@
 
                     @guest
                         <a href="{{ route('login') }}"
-                           class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-100 transition text-center w-full sm:w-auto">
+                            class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-100 transition text-center w-full sm:w-auto">
                             Inicia sesión para ❤️
                         </a>
                     @endguest
 
                     <a href="{{ route('products.index') }}"
-                       class="border border-primary-600 text-primary-600 px-6 py-3 rounded-lg hover:bg-primary-50 transition text-center w-full sm:w-auto">
+                        class="border border-primary-600 text-primary-600 px-6 py-3 rounded-lg hover:bg-primary-50 transition text-center w-full sm:w-auto">
                         ← Volver a Productos
                     </a>
                 </div>

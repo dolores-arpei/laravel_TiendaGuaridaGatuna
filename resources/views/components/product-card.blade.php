@@ -1,7 +1,9 @@
-<div class="bg-white rounded-lg shadow-lg overflow-hidden product-card {{ $class }} relative {{ $product->offer ? 'ring-2 ring-orange-400' : '' }}">
+<div
+    class="bg-white rounded-lg shadow-lg overflow-hidden product-card {{ $class }} relative {{ $product->offer ? 'ring-2 ring-secondary-400' : '' }} transition-all duration-300 hover:scale-105 hover:shadow-2xl">
     <!-- Badge de oferta destacado (esquina superior derecha) -->
     @if($product->offer)
-        <div class="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-bl-lg font-bold shadow-lg z-10">
+        <div
+            class="absolute top-0 right-0 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white px-4 py-2 rounded-bl-lg font-bold shadow-lg z-10">
             <span class="text-lg">
                 -{{ $product->offer->discount_percentage }}%
             </span>
@@ -15,11 +17,11 @@
         </div>
     @endisset
 
-    <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden {{ $product->offer ? 'bg-gradient-to-br from-orange-50 to-red-50' : '' }}">
+    <div
+        class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden {{ $product->offer ? 'bg-gradient-to-br from-secondary-50 to-secondary-100' : '' }}">
         @if(!empty($product->image))
-            <img src="{{ asset('storage/' . $product->image) }}" 
-                 alt="{{ $product->name }}" 
-                 class="w-full h-full object-cover">
+            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                class="w-full h-full object-cover">
         @else
             <span class="text-4xl">📦</span>
         @endif
@@ -32,7 +34,7 @@
         <!-- Badge de oferta adicional (nombre de la oferta) -->
         @if($product->offer)
             <div class="mb-4">
-                <span class="inline-block bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full font-semibold">
+                <span class="inline-block bg-secondary-100 text-secondary-800 text-xs px-3 py-1 rounded-full font-semibold">
                     🏷️ {{ $product->offer->name }}
                 </span>
             </div>
@@ -43,10 +45,11 @@
             @if($product->offer)
                 <div class="flex items-baseline gap-2">
                     <span class="text-sm text-gray-400 line-through">€{{ number_format($product->price, 2) }}</span>
-                    <span class="text-2xl font-bold text-orange-600">€{{ number_format($product->final_price, 2) }}</span>
+                    <span
+                        class="text-2xl font-bold text-secondary-600">€{{ number_format($product->final_price, 2) }}</span>
                 </div>
             @else
-                <span class="text-2xl font-bold text-primary-600">€{{ number_format($product->final_price, 2) }}</span>
+                <span class="text-2xl font-bold text-gray-900">€{{ number_format($product->final_price, 2) }}</span>
             @endif
         </div>
 
@@ -55,8 +58,8 @@
             {{ $actions }}
         @else
             <!-- Acción por defecto: Ver Detalles -->
-            <a href="{{ route('products.show', $product->id) }}" 
-               class="block text-center bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
+            <a href="{{ route('products.show', $product->id) }}"
+                class="block text-center bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
                 Ver Detalles
             </a>
         @endisset

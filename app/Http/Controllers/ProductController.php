@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index(): View
     {
         $products = Product::with(['category', 'offer'])->get();
-        
+
         return view('products.index', ['products' => $products]);
     }
 
@@ -30,11 +30,15 @@ class ProductController extends Controller
         $products = Product::with(['category', 'offer'])
             ->whereNotNull('offer_id')
             ->get();
-        
-        return view('products.index', ['products' => $products]);
+
+        return view('products.index', [
+            'products' => $products,
+            'onlyOnSale' => true,
+            'countOnSale' => $products->count(),
+        ]);
     }
 
-        /**
+    /**
      * Muestra el formulario para crear un nuevo producto.
      */
     public function create(): View
@@ -42,7 +46,7 @@ class ProductController extends Controller
         // Cargar todas las categorías y ofertas para los selectores del formulario
         $categories = Category::all();
         $offers = Offer::all();
-        
+
         return view('admin.products.create', compact('categories', 'offers'));
     }
 
@@ -99,19 +103,19 @@ class ProductController extends Controller
         if (!is_numeric($id) || $id < 1) {
             abort(404, 'ID de producto inválido');
         }
-        
+
         $product = Product::with(['category', 'offer'])->find($id);
-        
+
         if (!$product) {
             abort(404, 'Producto no encontrado');
         }
-        
+
         $category = $product->category;
-        
+
         return view('products.show', compact('product', 'category'));
     }
 
-        /**
+    /**
      * Muestra el formulario para editar un producto existente.
      */
     public function edit(Product $product): View
@@ -119,7 +123,7 @@ class ProductController extends Controller
         // Cargar todas las categorías y ofertas para los selectores del formulario
         $categories = Category::all();
         $offers = Offer::all();
-        
+
         return view('admin.products.edit', compact('product', 'categories', 'offers'));
     }
 
@@ -177,12 +181,12 @@ class ProductController extends Controller
             ->with('success', 'Producto eliminado exitosamente.');
     }
 
-        /**
+    /**
      * Muestra la lista de productos en el panel de administración.
      */
-public function adminIndex(): View
-{
-    $products = Product::with(['category', 'offer'])->latest()->get();
-    return view('admin.products.index', compact('products'));
-}
+    public function adminIndex(): View
+    {
+        $products = Product::with(['category', 'offer'])->latest()->get();
+        return view('admin.products.index', compact('products'));
+    }
 }

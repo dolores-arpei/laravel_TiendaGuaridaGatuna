@@ -1,32 +1,38 @@
 @extends('layouts.public')
 @section('title', 'Guarida Gatuna - Tienda para gatos')
 
-@push('styles')
-    <style>
-        .hero-gradient {
-            background: linear-gradient(135deg, #4b7db2 0%, #41b8a5 100%);
-        }
-    </style>
-@endpush
+
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-gradient text-white py-20">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                Bienvenida a Guarida Gatuna
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-primary-500 to-secondary-600 text-white py-16 relative overflow-hidden">
+        <!-- Optional Pattern overlay -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white" />
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-5xl md:text-7xl font-extrabold leading-tight mb-8 drop-shadow-lg">
+                Bienvenida a <span class="text-primary-100">Guarida Gatuna</span>
             </h2>
-            <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-                Tu tienda especializada en gatos: comida, arena, rascadores y juguetes para una vida felina más feliz.
+            <p class="text-xl md:text-3xl text-primary-50 mb-10 max-w-4xl mx-auto font-light leading-relaxed">
+                Tu tienda especializada en gatos: <span class="font-semibold">comida</span>, <span
+                    class="font-semibold">arena</span>, <span class="font-semibold">rascadores</span> y <span
+                    class="font-semibold">juguetes</span> para una vida felina más feliz.
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="{{ route('products.index') }}" 
-                   class="bg-white text-primary-600 font-bold py-4 px-8 rounded-full hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105">
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- Botón Principal -->
+                <a href="{{ route('products.index') }}"
+                    class="bg-white text-primary-600 font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                     Ver Productos
                 </a>
-                <a href="{{ route('products.on-sale') }}" 
-                   class="border-2 border-white text-white font-bold py-4 px-8 rounded-full hover:bg-white hover:text-primary-600 transition duration-300 ease-in-out">
-                    Ver ofertas
+                <!-- Botón Secundario -->
+                <a href="{{ route('products.on-sale') }}"
+                    class="bg-transparent border-2 border-white text-white font-bold py-4 px-10 rounded-full hover:bg-white hover:text-secondary-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+                    Ver Ofertas
                 </a>
             </div>
         </div>

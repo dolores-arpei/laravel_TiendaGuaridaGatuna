@@ -14,7 +14,8 @@
                             <div class="text-6xl mb-4">💔</div>
                             <h3 class="text-2xl font-bold text-gray-800 mb-2">Tu lista de deseos está vacía</h3>
                             <p class="text-gray-600 mb-6">Explora nuestros productos y guarda tus favoritos</p>
-                            <a href="{{ route('products.index') }}" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition">
+                            <a href="{{ route('products.index') }}"
+                                class="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition">
                                 Explorar Productos
                             </a>
                         </div>
@@ -24,10 +25,11 @@
                                 <x-product-card :product="$product" class="">
                                     {{-- Slot para botón de eliminar en esquina superior izquierda --}}
                                     <x-slot name="topAction">
-                                        <form action="{{ route('admin.wishlist.destroy', $product->id) }}" method="POST">
+                                        <form action="{{ route('wishlist.destroy', $product->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-2xl hover:scale-125 transition-transform" title="Eliminar de favoritos">
+                                            <button type="submit" class="text-2xl hover:scale-125 transition-transform"
+                                                title="Eliminar de favoritos">
                                                 ❌
                                             </button>
                                         </form>
@@ -39,11 +41,13 @@
                                             <form action="{{ route('cart.store') }}" method="POST" class="flex-1">
                                                 @csrf
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                <button type="submit" class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
+                                                <button type="submit"
+                                                    class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition">
                                                     🛒 Añadir al Carrito
                                                 </button>
                                             </form>
-                                            <a href="{{ route('products.show', $product->id) }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">
+                                            <a href="{{ route('products.show', $product->id) }}"
+                                                class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">
                                                 Ver
                                             </a>
                                         </div>

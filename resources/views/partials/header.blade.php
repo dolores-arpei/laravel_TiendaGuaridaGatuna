@@ -4,33 +4,31 @@
         <div class="flex items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center space-x-4">
-            <a href="{{ route('welcome') }}" class="text-2xl font-bold text-primary-600">
+                <a href="{{ route('welcome') }}" class="text-2xl font-bold text-primary-600">
                     😺 Guarida Gatuna
                 </a>
             </div>
-            
-        <!-- Navegación usando partial -->
-        @include('partials.navigation')
-            
+
+            <!-- Navegación usando partial -->
+            @include('partials.navigation')
+
             <!-- Carrito -->
             @php
                 $cart = session('cart', []);
                 $totalQuantity = array_sum(array_column($cart, 'quantity'));
             @endphp
             <div class="flex items-center space-x-4">
-            <a href="{{ route('cart.index') }}" 
-                class="text-gray-700 hover:text-primary-600 transition">
+                <a href="{{ route('cart.index') }}" class="text-gray-700 hover:text-primary-600 transition">
                     🛒 Carrito ( {{ $totalQuantity }} )
-            </a>
+                </a>
             </div>
-        
+
             {{-- <!-- CAMBIO: botón luna -->
-                <button id="darkModeToggle"
-                        class="text-gray-700 hover:text-primary-600 transition p-2 rounded-full">
-                    🌙
-                </button> --}}
-            
+            <button id="darkModeToggle" class="text-gray-700 hover:text-primary-600 transition p-2 rounded-full">
+                🌙
+            </button> --}}
+
         </div>
-        
+
     </div>
 </header>

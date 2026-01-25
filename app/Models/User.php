@@ -26,7 +26,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
+
+    /**
+     * Check if the user is an administrator.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
 
     /**
      * CAMPOS OCULTOS
@@ -65,10 +74,10 @@ class User extends Authenticatable
      * withPivot('quantity') expone el campo adicional 'quantity' de la tabla pivot.
      * withTimestamps() expone los timestamps de la tabla pivot.
      */
-      public function products()
-      {
-          return $this->belongsToMany(Product::class, 'product_user')
-              ->withPivot('quantity')
-              ->withTimestamps();
-      }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_user')
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
 }
